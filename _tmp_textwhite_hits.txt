@@ -1,6 +1,0 @@
-D:\gis-pd-atlas\src\pages\AnimationsPage.tsx
-D:\gis-pd-atlas\src\pages\BuildModePage.tsx
-D:\gis-pd-atlas\src\pages\CasePage.tsx
-D:\gis-pd-atlas\src\pages\DefectsPage.tsx
-D:\gis-pd-atlas\src\pages\HomePage.tsx
-D:\gis-pd-atlas\src\pages\QuickRefPage.tsx
