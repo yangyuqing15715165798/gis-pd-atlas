@@ -124,3 +124,10 @@ body::before {
     background: linear-gradient(135deg, rgba(47, 107, 255, 1), rgba(14, 165, 164, 0.78));
   }
 }
+
+@layer components {
+  .oc-text { color: var(--text); }
+  .oc-muted { color: var(--muted); }
+  .oc-muted-2 { color: var(--muted-2); }
+  .oc-border { border-color: var(--stroke); }
+}

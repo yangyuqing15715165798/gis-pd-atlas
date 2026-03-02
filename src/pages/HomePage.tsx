@@ -6,12 +6,12 @@ export function HomePage() {
       <section className="oc-panel p-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <div className="oc-pill inline-flex items-center gap-2 px-3 py-1 text-xs text-white/60">
+            <div className="oc-pill inline-flex items-center gap-2 px-3 py-1 text-xs text-slate-900/80">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
               标准样例已固化 · 可教学复用
             </div>
             <h1 className="oc-title mt-4 text-4xl font-semibold leading-tight">把 GIS 局放（PD）图谱讲明白</h1>
-            <p className="mt-4 max-w-3xl text-white/70">
+            <p className="mt-4 max-w-3xl text-slate-900/80">
               用“图谱 + 标注 + 生成过程 + 速查流程”帮助新人理解 PRPD：点从哪里来、为什么会聚成这样的形状、如何快速区分典型缺陷。
             </p>
           </div>
@@ -46,7 +46,7 @@ export function HomePage() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h2 className="oc-title text-2xl font-semibold">一分钟教学提示</h2>
-            <p className="mt-2 max-w-3xl text-sm text-white/65">
+            <p className="mt-2 max-w-3xl text-sm text-slate-900/80">
               先看对称，再看极性偏置，再看是否全相位覆盖——这三个问题通常能把方向锁定到 80%。
             </p>
           </div>
@@ -61,19 +61,20 @@ export function HomePage() {
 
 function Feature({ title, desc }: { title: string; desc: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+    <div className="rounded-2xl border border-slate-900/10 bg-white/60 p-5">
       <div className="text-sm font-semibold">{title}</div>
-      <div className="mt-2 text-sm leading-relaxed text-white/65">{desc}</div>
+      <div className="mt-2 text-sm leading-relaxed text-slate-900/80">{desc}</div>
     </div>
   )
 }
 
 function QuickLink({ to, title, tip }: { to: string; title: string; tip: string }) {
   return (
-    <Link to={to} className="oc-panel--subtle p-6 hover:bg-white/5">
+    <Link to={to} className="oc-panel--subtle p-6 hover:bg-white/60">
       <div className="text-sm font-semibold">{title}</div>
-      <div className="mt-1 text-xs text-white/60">{tip}</div>
-      <div className="mt-4 text-xs text-white/45">查看案例 →</div>
+      <div className="mt-1 text-xs text-slate-900/80">{tip}</div>
+      <div className="mt-4 text-xs text-slate-900/80">查看案例 →</div>
     </Link>
   )
 }
+

@@ -16,28 +16,28 @@ export function AnimationsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold">动画演示：PRPD 点是怎么来的</h1>
-        <p className="mt-2 max-w-3xl text-sm text-white/70">
+        <p className="mt-2 max-w-3xl text-sm text-slate-900/80">
           用可控参数“现场生成”一张 PRPD 点云：观察相位窗口、对称性、分散程度与噪声的影响。
         </p>
       </div>
 
       <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-5">
+        <div className="lg:col-span-2 rounded-2xl border border-slate-900/10 bg-white/60 p-5">
           <div className="flex items-center justify-between">
             <div className="text-sm font-semibold">PRPD（实时生成）</div>
-            <div className="text-xs text-white/50">教学模拟</div>
+            <div className="text-xs text-slate-900/80">教学模拟</div>
           </div>
           <div className="mt-3 h-[520px]">
             <PrpdChart points={points} />
           </div>
         </div>
 
-        <div className="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-5">
+        <div className="space-y-5 rounded-2xl border border-slate-900/10 bg-white/60 p-5">
           <Control label="缺陷原型">
             <select
               value={profile}
               onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-              className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-slate-900/10 bg-ink-900 px-3 py-2 text-sm"
             >
               <option value="corona">电晕放电</option>
               <option value="floatingClassic">悬浮放电（示例·更像）</option>
@@ -76,9 +76,9 @@ export function AnimationsPage() {
             />
           </Control>
 
-          <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
+          <div className="rounded-xl border border-slate-900/10 bg-white/60 p-4 text-sm text-slate-900/80">
             <div className="font-semibold">快速判断思路（教学）</div>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
+            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-900/80">
               <li>先看：有没有明显的“窗口”和“对称”。</li>
               <li>再看：是否偏一边半周（电晕的极性效应）。</li>
               <li>最后看：是否全相位铺开（颗粒/噪声更常见）。</li>
@@ -93,8 +93,9 @@ export function AnimationsPage() {
 function Control({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="mb-2 text-xs font-medium text-white/70">{label}</div>
+      <div className="mb-2 text-xs font-medium text-slate-900/80">{label}</div>
       {children}
     </div>
   )
 }
+

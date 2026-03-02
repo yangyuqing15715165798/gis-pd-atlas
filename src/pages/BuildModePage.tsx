@@ -55,21 +55,21 @@ export function BuildModePage() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold">生成过程模式：点云如何“长出来”</h1>
-          <p className="mt-2 max-w-3xl text-sm text-white/70">
+          <p className="mt-2 max-w-3xl text-sm text-slate-900/80">
             选择一个缺陷原型后，图谱会从 0 点开始，按时间批量累积。你会看到：点越积越多，最后形成我们熟悉的 PRPD 形态。
           </p>
         </div>
-        <label className="flex items-center gap-2 text-sm text-white/70">
+        <label className="flex items-center gap-2 text-sm text-slate-900/80">
           <input type="checkbox" checked={compare} onChange={(e) => setCompare(e.target.checked)} />
           对比模式（右侧显示最终形态）
         </label>
       </div>
 
       <section className={compare ? 'grid gap-6 xl:grid-cols-2' : 'grid gap-6'}>
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+        <div className="rounded-2xl border border-slate-900/10 bg-white/60 p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="text-sm font-semibold">PRPD（累积生成）</div>
-            <div className="text-xs text-white/55">进度：{Math.round(progress * 100)}%</div>
+            <div className="text-xs text-slate-900/80">进度：{Math.round(progress * 100)}%</div>
           </div>
           <div className="mt-3 h-[520px]">
             <PrpdChart points={state.shown} overlayPoints={state.recent} />
@@ -84,7 +84,7 @@ export function BuildModePage() {
               {playing ? '暂停' : '播放'}
             </button>
             <button
-              className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10"
+              className="rounded-xl border border-slate-900/10 bg-white/60 px-4 py-2 text-sm font-semibold hover:bg-white/75"
               onClick={() => {
                 setPlaying(false)
                 setState(initStream({ seed: 42, profile, n, noise }))
@@ -93,41 +93,41 @@ export function BuildModePage() {
               重置
             </button>
             <button
-              className="rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10 disabled:opacity-50"
+              className="rounded-xl border border-slate-900/10 bg-white/60 px-4 py-2 text-sm font-semibold hover:bg-white/75 disabled:opacity-50"
               onClick={() => setState((s) => stepStream(s, batch))}
               disabled={state.cursor >= state.all.length}
             >
               单步 +{batch}
             </button>
 
-            <div className="ml-auto h-2 w-full max-w-[320px] overflow-hidden rounded-full bg-white/10">
+            <div className="ml-auto h-2 w-full max-w-[320px] overflow-hidden rounded-full bg-white/75">
               <div className="h-full bg-emerald-300/70" style={{ width: `${progress * 100}%` }} />
             </div>
           </div>
         </div>
 
         {compare ? (
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+          <div className="rounded-2xl border border-slate-900/10 bg-white/60 p-5">
             <div className="flex items-center justify-between">
               <div className="text-sm font-semibold">最终形态（静态）</div>
-              <div className="text-xs text-white/55">同一参数 · 全量点云</div>
+              <div className="text-xs text-slate-900/80">同一参数 · 全量点云</div>
             </div>
             <div className="mt-3 h-[520px]">
               <PrpdChart points={state.all} />
             </div>
-            <div className="mt-3 text-xs text-white/60">教学建议：先看左边过程，再对照右边结果。</div>
+            <div className="mt-3 text-xs text-slate-900/80">教学建议：先看左边过程，再对照右边结果。</div>
           </div>
         ) : null}
       </section>
 
       <section className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-5 rounded-2xl border border-white/10 bg-white/5 p-5 lg:col-span-2">
+        <div className="space-y-5 rounded-2xl border border-slate-900/10 bg-white/60 p-5 lg:col-span-2">
           <div className="grid gap-4 md:grid-cols-2">
             <Control label="缺陷原型">
               <select
                 value={profile}
                 onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-                className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
+                className="w-full rounded-lg border border-slate-900/10 bg-ink-900 px-3 py-2 text-sm"
               >
                 <option value="corona">电晕放电</option>
                 <option value="floatingClassic">悬浮放电（示例·更像）</option>
@@ -142,9 +142,9 @@ export function BuildModePage() {
               </select>
             </Control>
 
-            <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
+            <div className="rounded-xl border border-slate-900/10 bg-white/60 p-4 text-sm text-slate-900/80">
               <div className="font-semibold">教学提示</div>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-900/80">
                 <li>先看右侧最终形态，记住它的“指纹”。</li>
                 <li>再看左侧累积：窗口先出现，密度后变厚。</li>
                 <li>新增点（蓝色）告诉你“点主要落在哪里”。</li>
@@ -171,9 +171,9 @@ export function BuildModePage() {
           </div>
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+        <div className="space-y-4 rounded-2xl border border-slate-900/10 bg-white/60 p-5">
           <div className="text-sm font-semibold">说明</div>
-          <div className="text-sm text-white/75">
+          <div className="text-sm text-slate-900/80">
             此页面用于教学模拟：对照“过程”和“最终形态”。工程识别仍需结合 PRPS、示波器波形与多手段联合诊断。
           </div>
         </div>
@@ -185,8 +185,9 @@ export function BuildModePage() {
 function Control({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div>
-      <div className="mb-2 text-xs font-medium text-white/70">{label}</div>
+      <div className="mb-2 text-xs font-medium text-slate-900/80">{label}</div>
       {children}
     </div>
   )
 }
+
