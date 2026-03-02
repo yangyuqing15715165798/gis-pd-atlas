@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { casesById } from '../data/cases'
 import { PrpdChart } from '../viz/PrpdChart'
@@ -7,6 +7,7 @@ import { generatePrpdPoints } from '../viz/prpd'
 export function CasePage() {
   const { caseId } = useParams()
   const c = caseId ? casesById[caseId] : undefined
+  const [showMarks, setShowMarks] = useState(true)
 
   const points = useMemo(() => {
     if (!c) return []
@@ -38,12 +39,18 @@ export function CasePage() {
 
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="text-sm font-semibold">PRPD（教学模拟）</div>
-            <div className="text-xs text-white/50">相位 0–360° · 幅值 0–1</div>
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-2 text-xs text-white/60">
+                <input type="checkbox" checked={showMarks} onChange={(e) => setShowMarks(e.target.checked)} />
+                显示标注层（3 个关键区域）
+              </label>
+              <div className="text-xs text-white/50">相位 0–360° · 幅值 0–1</div>
+            </div>
           </div>
           <div className="mt-3 h-[420px]">
-            <PrpdChart points={points} />
+            <PrpdChart points={points} marks={c.marks} showMarks={showMarks} />
           </div>
         </div>
 

@@ -1,5 +1,12 @@
 import type { PrpdProfile } from '../viz/prpd'
 
+export type CaseMark = {
+  id: string
+  label: string
+  phase: [number, number]
+  amp: [number, number]
+}
+
 export type DefectGroup = {
   id: string
   name: string
@@ -17,6 +24,7 @@ export type Case = {
   lookFors: string[]
   pitfalls: string[]
   explain: string
+  marks: CaseMark[]
 }
 
 export const defectGroups: DefectGroup[] = [
@@ -43,6 +51,11 @@ export const cases: Case[] = [
     pitfalls: ['噪声点会让图看起来“哪里都有”', '强度变化会让云团上下变厚，但形态不一定变'],
     explain:
       '把交流电想象成一个转盘：转到某些角度时，空隙两端的电压差更大，就更容易“啪”地放一次。很多次叠加，就形成了相位上有规律的点云。',
+    marks: [
+      { id: 'pos', label: '正半周典型窗口', phase: [35, 85], amp: [0.15, 0.95] },
+      { id: 'neg', label: '负半周典型窗口', phase: [215, 265], amp: [0.15, 0.95] },
+      { id: 'core', label: '密集核心区（更常出现）', phase: [50, 70], amp: [0.22, 0.65] },
+    ],
   },
   {
     id: 'floating',
@@ -60,6 +73,11 @@ export const cases: Case[] = [
     pitfalls: ['把“散”误认为噪声（要看是否仍有相位规律）', '不同结构下表现差异大，别死记一张图'],
     explain:
       '悬浮体像一个小电容：电场让它慢慢充电，充到某个程度就放电一下又归零。因为它的“充电过程”会被环境影响，所以图谱可能更不稳定。',
+    marks: [
+      { id: 'pos', label: '正半周较宽窗口', phase: [55, 125], amp: [0.10, 0.95] },
+      { id: 'neg', label: '负半周较宽窗口', phase: [235, 305], amp: [0.10, 0.95] },
+      { id: 'scatter', label: '更“散”的分布感', phase: [70, 110], amp: [0.20, 0.80] },
+    ],
   },
   {
     id: 'particle',
@@ -77,6 +95,11 @@ export const cases: Case[] = [
     pitfalls: ['把漂移当成测量不稳定（有时确实是颗粒运动）', '如果采样时间太短，漂移看不出来'],
     explain:
       '你可以把它理解成“放电的开关”在移动：颗粒滚到哪里，哪里电场更尖锐，放电更容易发生。时间拉长后，你会看到图谱的主要密集区在缓慢移动。',
+    marks: [
+      { id: 'pos', label: '起始窗口（会漂）', phase: [45, 95], amp: [0.15, 0.95] },
+      { id: 'neg', label: '对称窗口（会漂）', phase: [225, 275], amp: [0.15, 0.95] },
+      { id: 'drift', label: '“漂移感”提示区', phase: [60, 120], amp: [0.20, 0.70] },
+    ],
   },
   {
     id: 'corona',
@@ -94,8 +117,12 @@ export const cases: Case[] = [
     pitfalls: ['把电晕当内部放电（看密度形态差别）', '仪器带宽/阈值设置会影响形态'],
     explain:
       '电晕更像“细小但频繁”的放电：每一次都不算大，但发生次数多，所以图上常出现比较均匀、连续的密集带。',
+    marks: [
+      { id: 'pos', label: '偏固定窗口（较早相位）', phase: [5, 55], amp: [0.02, 0.45] },
+      { id: 'neg', label: '对称窗口', phase: [185, 235], amp: [0.02, 0.45] },
+      { id: 'mist', label: '“薄雾状”高重复率区', phase: [15, 45], amp: [0.06, 0.30] },
+    ],
   },
 ]
 
 export const casesById = Object.fromEntries(cases.map((c) => [c.id, c])) as Record<string, Case>
-
