@@ -174,13 +174,26 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     // corona
-    const majorHalf = rng() < 0.82
+    // target: strong polarity effect. Main half-cycle: weak amplitude, wide phase, high repetition ("tower" dense at bottom).
+    // severe: minor half-cycle: higher amplitude, narrower phase, fewer events.
+    const majorHalf = rng() < 0.84
     const center = majorHalf ? 210 : 30
-    const spread = majorHalf ? 32 : 14
+    const spread = majorHalf ? 34 : 12
     const phaseDeg = sampleWindow(rng, center, spread)
-    const amp = clamp01((majorHalf ? 0.06 : 0.20) + Math.abs(gauss(rng)) * (majorHalf ? 0.10 : 0.16) + rng() * 0.04)
+
+    let amp: number
+    if (majorHalf) {
+      // many low amps, a few medium (bottom-heavy)
+      const r = rng()
+      amp = clamp01(0.03 + (r ** 2.3) * 0.42 + Math.abs(gauss(rng)) * 0.05)
+    } else {
+      // fewer, but higher & narrower
+      const r = rng()
+      amp = clamp01(0.18 + (r ** 0.85) * 0.60 + Math.abs(gauss(rng)) * 0.06)
+    }
     pts.push({ phaseDeg, amp })
   }
 
   return pts
 }
+
