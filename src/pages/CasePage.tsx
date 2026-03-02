@@ -18,7 +18,7 @@ export function CasePage() {
     return (
       <div className="space-y-4">
         <div className="text-lg font-semibold">未找到该案例</div>
-        <Link className="text-sm text-blue-300 hover:underline" to="/defects">
+        <Link className="text-sm text-blue-200 hover:underline" to="/defects">
           返回缺陷类型
         </Link>
       </div>
@@ -27,84 +27,129 @@ export function CasePage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold">{c.title}</h1>
-          <p className="mt-2 text-sm text-white/70">{c.oneLiner}</p>
-        </div>
-        <Link className="text-sm text-blue-300 hover:underline" to="/defects">
-          ← 返回缺陷类型
-        </Link>
-      </div>
-
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="text-sm font-semibold">PRPD（教学模拟）</div>
-            <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 text-xs text-white/60">
-                <input type="checkbox" checked={showMarks} onChange={(e) => setShowMarks(e.target.checked)} />
-                显示标注层（关键区域）
-              </label>
-              <div className="text-xs text-white/50">相位 0–360° · 幅值 0–1</div>
+      <header className="oc-panel p-7">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="oc-pill inline-flex items-center gap-2 px-3 py-1 text-xs text-white/65">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-300/80" />
+              案例 · 标准样例
             </div>
+            <h1 className="oc-title mt-4 text-3xl font-semibold leading-tight">{c.title}</h1>
+            <p className="mt-3 max-w-4xl text-sm text-white/75">{c.oneLiner}</p>
           </div>
-          <div className="mt-3 h-[420px]">
+
+          <div className="flex flex-wrap gap-2">
+            <Link className="oc-btn" to="/defects">
+              ← 返回缺陷类型
+            </Link>
+            <Link className="oc-btn" to="/quickref">
+              速查
+            </Link>
+            <Link className="oc-btn" to="/build">
+              生成过程
+            </Link>
+          </div>
+        </div>
+
+        <div className="mt-6 grid gap-4 md:grid-cols-3">
+          <Stat label="点数 n" value={String(c.sim.n)} />
+          <Stat label="噪声 noise" value={String(c.sim.noise)} />
+          <Stat label="关键" value={c.lookFors[0] ?? '—'} />
+        </div>
+      </header>
+
+      <section className="grid gap-6 lg:grid-cols-12">
+        <div className="lg:col-span-8 oc-panel p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div className="text-sm font-semibold">PRPD（教学模拟）</div>
+              <div className="mt-1 text-xs text-white/60">相位 0–360° · 幅值 0–1</div>
+            </div>
+
+            <label className="oc-pill flex items-center gap-2 px-3 py-1 text-xs text-white/70">
+              <input type="checkbox" checked={showMarks} onChange={(e) => setShowMarks(e.target.checked)} />
+              标注层
+            </label>
+          </div>
+
+          <div className="mt-3 h-[460px]">
             <PrpdChart points={points} marks={c.marks} showMarks={showMarks} />
           </div>
-          <div className="mt-3 text-xs text-white/55">固定样例参数：n={c.sim.n} · noise={c.sim.noise}</div>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <MiniBlock title="3 句话讲明白" tone="blue">
+              <ol className="list-decimal space-y-1 pl-5 text-sm text-white/78">
+                {c.threeLines.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ol>
+            </MiniBlock>
+
+            <MiniBlock title="你该看哪里（3 个点）" tone="aqua">
+              <ul className="list-disc space-y-1 pl-5 text-sm text-white/78">
+                {c.lookFors.map((t) => (
+                  <li key={t}>{t}</li>
+                ))}
+              </ul>
+            </MiniBlock>
+          </div>
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div>
-            <div className="text-sm font-semibold">3 句话讲明白</div>
-            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-white/75">
-              {c.threeLines.map((t) => (
+        <aside className="lg:col-span-4 space-y-6">
+          <div className="oc-panel p-6">
+            <div className="text-sm font-semibold">识别要点（5 条）</div>
+            <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-white/78">
+              {c.recognitionPoints.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ol>
           </div>
 
-          <div>
-            <div className="text-sm font-semibold">你该看哪里（3 个点）</div>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
-              {c.lookFors.map((t) => (
-                <li key={t}>{t}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
+          <div className="oc-panel--subtle p-6">
             <div className="text-sm font-semibold">容易搞混</div>
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-white/75">
               {c.pitfalls.map((t) => (
                 <li key={t}>{t}</li>
               ))}
             </ul>
           </div>
 
-          <Link
-            to="/build"
-            className="block rounded-xl bg-emerald-400/15 px-4 py-3 text-sm font-semibold text-emerald-200 hover:bg-emerald-400/20"
-          >
-            去看：点云如何“长出来”（生成过程） →
-          </Link>
-        </div>
+          <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 to-white/5 p-6">
+            <div className="text-sm font-semibold">机理解释</div>
+            <p className="mt-3 text-sm leading-relaxed text-white/75">{c.explain}</p>
+          </div>
+        </aside>
       </section>
+    </div>
+  )
+}
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-        <div className="text-sm font-semibold">识别要点（5 条）</div>
-        <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-white/75">
-          {c.recognitionPoints.map((t) => (
-            <li key={t}>{t}</li>
-          ))}
-        </ol>
-      </section>
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div className="text-xs text-white/55">{label}</div>
+      <div className="mt-1 text-sm font-semibold text-white/88">{value}</div>
+    </div>
+  )
+}
 
-      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
-        <div className="text-sm font-semibold">为什么会这样（机理解释）</div>
-        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-white/75">{c.explain}</p>
-      </section>
+function MiniBlock({
+  title,
+  children,
+  tone,
+}: {
+  title: string
+  children: React.ReactNode
+  tone: 'blue' | 'aqua'
+}) {
+  const bar = tone === 'blue' ? 'bg-blue-400/60' : 'bg-emerald-300/70'
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className="flex items-center justify-between">
+        <div className="text-sm font-semibold">{title}</div>
+        <div className={`h-1.5 w-10 rounded-full ${bar}`} />
+      </div>
+      <div className="mt-3">{children}</div>
     </div>
   )
 }

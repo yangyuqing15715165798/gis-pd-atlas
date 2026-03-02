@@ -5,12 +5,12 @@
 :root {
   color-scheme: dark;
 
-  --bg-0: #060a12;
-  --bg-1: #0b1120;
-  --panel: rgba(255, 255, 255, 0.06);
-  --panel-2: rgba(255, 255, 255, 0.04);
-  --stroke: rgba(255, 255, 255, 0.10);
-  --stroke-2: rgba(255, 255, 255, 0.14);
+  --bg-0: #0A1020;
+  --bg-1: #101A33;
+  --panel: rgba(255, 255, 255, 0.10);
+  --panel-2: rgba(255, 255, 255, 0.07);
+  --stroke: rgba(255, 255, 255, 0.14);
+  --stroke-2: rgba(255, 255, 255, 0.18);
 
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.68);
@@ -65,8 +65,8 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0/ 28px 28px,
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px) 0 0/ 28px 28px;
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0/ 28px 28px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.036) 1px, transparent 1px) 0 0/ 28px 28px;
   mask-image: radial-gradient(closest-side at 40% 20%, rgba(0, 0, 0, 0.9), transparent 75%);
   opacity: 0.55;
 }
@@ -130,3 +130,4 @@ body::after {
     background: linear-gradient(135deg, rgba(62, 112, 255, 1), rgba(0, 255, 208, 0.48));
   }
 }
+
