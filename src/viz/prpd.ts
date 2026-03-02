@@ -77,17 +77,22 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     if (args.profile === 'internalVoid') {
+      // target: symmetric in +/- half cycles; amplitude dispersed but with bottom-heavy density; relatively fewer events.
       const center = u < 0.5 ? 55 : 235
-      const phaseDeg = sampleWindow(rng, center, 16)
-      const amp = clamp01(0.10 + Math.abs(gauss(rng)) * 0.30 + rng() * 0.06)
+      const phaseDeg = sampleWindow(rng, center, 14)
+      const r = rng()
+      const amp = clamp01(0.05 + (r ** 1.9) * 0.65 + Math.abs(gauss(rng)) * 0.06)
       pts.push({ phaseDeg, amp })
       continue
     }
 
     if (args.profile === 'surface') {
+      // target: similar to void but wider phase and more dispersed amplitude (tail), more unstable.
       const center = u < 0.5 ? 110 : 290
-      const phaseDeg = sampleWindow(rng, center, 28)
-      const amp = clamp01(0.10 + Math.abs(gauss(rng)) * 0.35 + rng() * 0.10)
+      const phaseDeg = sampleWindow(rng, center, 30)
+      const r = rng()
+      // heavier tail
+      const amp = clamp01(0.04 + (r ** 1.2) * 0.78 + Math.abs(gauss(rng)) * 0.08)
       pts.push({ phaseDeg, amp })
       continue
     }
@@ -206,5 +211,6 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
 
   return pts
 }
+
 
 
