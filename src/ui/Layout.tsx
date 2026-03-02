@@ -29,6 +29,31 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="mx-auto max-w-6xl px-5 py-8 text-xs text-slate-700">
           <div>说明：本网站图谱与数据为教学模拟（非真实设备数据），用于解释 PRPD/局放机理与典型形态。</div>
           <div className="mt-2">合作：可定制企业内训版本、报告可视化模板、真实案例的图谱+动画包装。</div>
+
+          <div className="mt-5 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <div className="font-medium text-slate-900/80">联系我</div>
+              <div className="mt-1 leading-5">
+                邮箱：
+                <a
+                  className="underline decoration-slate-400/60 underline-offset-2 hover:text-slate-900"
+                  href="mailto:1952482546@qq.com"
+                >
+                  1952482546@qq.com
+                </a>
+              </div>
+              <div className="leading-5">微信公众号：码海寻道（微信内搜索“码海寻道”或扫码关注）</div>
+            </div>
+
+            <div className="justify-self-start sm:justify-self-end">
+              <img
+                src="/assets/wechat-qrcode.jpg"
+                alt="微信公众号：码海寻道"
+                className="h-28 w-28 rounded-lg border border-slate-900/10 bg-white object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         </div>
       </footer>
     </div>
