@@ -10,7 +10,26 @@ export function QuickRefPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <div className="text-sm font-semibold">判断流程（先看什么，再看什么）</div>
+        <div className="mt-3 grid gap-3 md:grid-cols-5">
+          <Step title="① 对称吗？" desc="正负半周是否相似" />
+          <Arrow />
+          <Step title="② 偏半周吗？" desc="是否明显偏一边（极性效应）" />
+          <Arrow />
+          <Step title="③ 全相位吗？" desc="是否 0–360° 都铺开" />
+        </div>
+        <div className="mt-4 grid gap-3 md:grid-cols-4">
+          <Mini title="对称 + 八字/散但有规律" desc="更像悬浮" />
+          <Mini title="偏半周 + 弱但密" desc="更像电晕" />
+          <Mini title="全相位 + 离散 + 幅值宽" desc="更像颗粒" />
+          <Mini title="对称但更散/拖尾更长" desc="空穴 vs 沿面（沿面更散）" />
+        </div>
+        <div className="mt-3 text-xs text-white/55">
+          提醒：这是教学速查。工程诊断建议结合 PRPS、示波器波形、趋势，以及超声/气体分解产物等多手段联合判断。
+        </div>
+      </section><div className="grid gap-6 md:grid-cols-2">
         {defectGroups.map((g) => (
           <div key={g.id} className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <div className="flex items-baseline justify-between">
@@ -41,3 +60,29 @@ export function QuickRefPage() {
   )
 }
 
+
+function Step({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+      <div className="text-sm font-semibold">{title}</div>
+      <div className="mt-1 text-xs text-white/60">{desc}</div>
+    </div>
+  )
+}
+
+function Arrow() {
+  return (
+    <div className="hidden items-center justify-center md:flex">
+      <div className="text-white/40">→</div>
+    </div>
+  )
+}
+
+function Mini({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+      <div className="text-xs font-semibold text-white/80">{title}</div>
+      <div className="mt-1 text-xs text-white/60">{desc}</div>
+    </div>
+  )
+}
