@@ -1,4 +1,9 @@
-import React from 'react'\nimport '@fontsource/ibm-plex-sans/400.css'\nimport '@fontsource/ibm-plex-sans/500.css'\nimport '@fontsource/ibm-plex-sans/600.css'\nimport '@fontsource/fraunces/600.css'\nimport '@fontsource/fraunces/700.css'
+import React from 'react'
+import '@fontsource/ibm-plex-sans/400.css'
+import '@fontsource/ibm-plex-sans/500.css'
+import '@fontsource/ibm-plex-sans/600.css'
+import '@fontsource/fraunces/600.css'
+import '@fontsource/fraunces/700.css'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
@@ -11,4 +16,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </BrowserRouter>
   </React.StrictMode>,
 )
-
