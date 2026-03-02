@@ -1,8 +1,47 @@
 import ReactECharts from 'echarts-for-react'
+import type { CaseMark } from '../data/cases'
 import type { PrpdPoint } from './prpd'
 
-export function PrpdChart({ points }: { points: PrpdPoint[] }) {
+export function PrpdChart({
+  points,
+  marks,
+  showMarks = true,
+}: {
+  points: PrpdPoint[]
+  marks?: CaseMark[]
+  showMarks?: boolean
+}) {
   const data = points.map((p) => [p.phaseDeg, p.amp])
+
+  const markAreaData =
+    showMarks && marks?.length
+      ? marks.map((m, idx) => {
+          const colorPalette = [
+            'rgba(62,112,255,0.18)',
+            'rgba(0,255,208,0.14)',
+            'rgba(255,184,0,0.14)',
+          ]
+          const fill = colorPalette[idx % colorPalette.length]
+          return [
+            {
+              name: m.label,
+              xAxis: m.phase[0],
+              yAxis: m.amp[0],
+              itemStyle: { color: fill },
+              label: {
+                show: true,
+                color: 'rgba(255,255,255,0.85)',
+                fontSize: 11,
+                formatter: m.label,
+              },
+            },
+            {
+              xAxis: m.phase[1],
+              yAxis: m.amp[1],
+            },
+          ]
+        })
+      : []
 
   const option = {
     backgroundColor: 'transparent',
@@ -42,6 +81,13 @@ export function PrpdChart({ points }: { points: PrpdPoint[] }) {
         itemStyle: { color: 'rgba(0, 255, 208, 0.55)' },
         large: true,
         largeThreshold: 2000,
+        markArea: markAreaData.length
+          ? {
+              silent: true,
+              itemStyle: { borderWidth: 1, borderColor: 'rgba(255,255,255,0.10)' },
+              data: markAreaData,
+            }
+          : undefined,
       },
     ],
   }
