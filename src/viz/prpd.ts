@@ -117,8 +117,18 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     if (args.profile === 'particle') {
+      // target: no obvious polarity effect; signals across the whole cycle; broad amplitude; irregular/discrete.
       const phaseDeg = rng() * 360
-      const amp = clamp01(0.06 + (rng() ** 0.65) * 0.85 * (0.6 + 0.4 * rng()) + gauss(rng) * 0.05)
+
+      // Mixture distribution: many small pulses + some medium + rare large pulses
+      const r = rng()
+      let ampBase: number
+      if (r < 0.72) ampBase = (rng() ** 1.6) * 0.35
+      else if (r < 0.95) ampBase = 0.25 + (rng() ** 0.9) * 0.45
+      else ampBase = 0.55 + (rng() ** 0.55) * 0.45
+
+      // add irregularity
+      const amp = clamp01(0.03 + ampBase + gauss(rng) * 0.05)
       pts.push({ phaseDeg, amp })
       continue
     }
@@ -196,4 +206,5 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
 
   return pts
 }
+
 
