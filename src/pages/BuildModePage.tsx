@@ -116,7 +116,7 @@ export function BuildModePage() {
               <PrpdChart points={state.all} />
             </div>
             <div className="mt-3 text-xs text-white/60">
-              教学建议：先看左边“怎么长出来”，再对照右边“最后长成什么样”。当你看到右边的形态稳定后，再回到左边观察密度是如何累积的。
+              教学建议：先看左边“怎么长出来”，再对照右边“最后长成什么样”。
             </div>
           </div>
         ) : null}
@@ -131,12 +131,13 @@ export function BuildModePage() {
                 onChange={(e) => setProfile(e.target.value as PrpdProfile)}
                 className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
               >
-                <option value="internalVoid">内部放电</option>
+                <option value="corona">电晕放电</option>
+                <option value="floatingIn">悬浮放电（内八字）</option>
+                <option value="floatingOut">悬浮放电（外八字）</option>
+                <option value="particle">自由颗粒放电</option>
+                <option value="internalVoid">空穴放电</option>
                 <option value="surface">沿面放电</option>
-                <option value="floating">悬浮电位</option>
-                <option value="particle">颗粒运动</option>
                 <option value="protrusion">尖端/毛刺</option>
-                <option value="intermittent">间歇性放电</option>
                 <option value="multiSource">多源叠加</option>
                 <option value="noise">噪声/干扰</option>
               </select>
@@ -145,9 +146,9 @@ export function BuildModePage() {
             <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
               <div className="font-semibold">教学提示</div>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
-                <li>先用小点数（2000～6000）看“形状”，再加点数看“密度”。</li>
-                <li>噪声比例变大，图谱会更“糊”，但相位窗口仍可能隐约存在。</li>
-                <li>多源叠加会出现两种笔触：一团云 + 一层雾。</li>
+                <li>先看右侧最终形态，记住它的“指纹”。</li>
+                <li>再看左侧累积：窗口先出现，密度后变厚。</li>
+                <li>新增点（蓝色）告诉你“点主要落在哪里”。</li>
               </ul>
             </div>
           </div>
@@ -172,14 +173,10 @@ export function BuildModePage() {
         </div>
 
         <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-sm font-semibold">怎么看懂“长出来”的过程？</div>
-          <ol className="list-decimal space-y-2 pl-5 text-sm text-white/75">
-            <li>先看右侧最终形态，记住它的“指纹”。</li>
-            <li>再看左侧累积：窗口先出现，密度后变厚。</li>
-            <li>注意新增点（蓝色）主要落在哪些相位与幅值范围。</li>
-          </ol>
-          <div className="text-xs text-white/60">
-            注：该模式为教学模拟，并不代表真实设备的绝对幅值/统计分布。
+          <div className="text-sm font-semibold">对齐机理的看法</div>
+          <div className="text-sm text-white/75">
+            这个页面用于教学：同一套参数下，左边是“过程”，右边是“结果”。
+            真正的工程识别还需要结合 PRPS、示波器波形、趋势与多手段联合诊断。
           </div>
         </div>
       </section>
