@@ -5,16 +5,16 @@
 :root {
   color-scheme: dark;
 
-  --bg-0: #0A1020;
-  --bg-1: #101A33;
-  --panel: rgba(255, 255, 255, 0.10);
-  --panel-2: rgba(255, 255, 255, 0.07);
-  --stroke: rgba(255, 255, 255, 0.14);
+  --bg-0: #131A2D;
+  --bg-1: #1A2440;
+  --panel: rgba(255, 255, 255, 0.16);
+  --panel-2: rgba(255, 255, 255, 0.12);
+  --stroke: rgba(255, 255, 255, 0.20);
   --stroke-2: rgba(255, 255, 255, 0.18);
 
   --text: rgba(255, 255, 255, 0.92);
-  --muted: rgba(255, 255, 255, 0.68);
-  --muted-2: rgba(255, 255, 255, 0.52);
+  --muted: rgba(255, 255, 255, 0.74);
+  --muted-2: rgba(255, 255, 255, 0.60);
 
   --aqua: #00ffd0;
   --blue: #3e70ff;
@@ -36,9 +36,9 @@ body,
 body {
   margin: 0;
   background:
-    radial-gradient(1200px 700px at 12% 0%, rgba(62, 112, 255, 0.18), transparent 55%),
-    radial-gradient(900px 520px at 88% 12%, rgba(0, 255, 208, 0.10), transparent 50%),
-    radial-gradient(1000px 700px at 55% 120%, rgba(255, 184, 0, 0.06), transparent 55%),
+    radial-gradient(1200px 700px at 12% 0%, rgba(62, 112, 255, 0.24), transparent 55%),
+    radial-gradient(900px 520px at 88% 12%, rgba(0, 255, 208, 0.14), transparent 50%),
+    radial-gradient(1000px 700px at 55% 120%, rgba(255, 184, 0, 0.10), transparent 55%),
     linear-gradient(180deg, var(--bg-0), var(--bg-1));
   color: var(--text);
   font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
@@ -68,7 +68,7 @@ body::before {
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px) 0 0/ 28px 28px,
     linear-gradient(90deg, rgba(255, 255, 255, 0.036) 1px, transparent 1px) 0 0/ 28px 28px;
   mask-image: radial-gradient(closest-side at 40% 20%, rgba(0, 0, 0, 0.9), transparent 75%);
-  opacity: 0.55;
+  opacity: 0.38;
 }
 
 body::after {
@@ -78,7 +78,7 @@ body::after {
   pointer-events: none;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="140" height="140" filter="url(%23n)" opacity="0.22"/></svg>');
   mix-blend-mode: overlay;
-  opacity: 0.18;
+  opacity: 0.12;
 }
 
 @layer components {
@@ -130,4 +130,5 @@ body::after {
     background: linear-gradient(135deg, rgba(62, 112, 255, 1), rgba(0, 255, 208, 0.48));
   }
 }
+
 
