@@ -40,9 +40,13 @@ export function AnimationsPage() {
               className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
             >
               <option value="internalVoid">内部放电（示例）</option>
+              <option value="surface">沿面放电（示例）</option>
               <option value="floating">悬浮电位（示例）</option>
               <option value="particle">颗粒运动（示例）</option>
-              <option value="corona">电晕/尖端（示例）</option>
+              <option value="protrusion">尖端/毛刺（示例）</option>
+              <option value="intermittent">间歇性放电（示例）</option>
+              <option value="multiSource">多源叠加（示例）</option>
+              <option value="noise">噪声/干扰（示例）</option>
             </select>
           </Control>
 
@@ -92,6 +96,3 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
-
-
-

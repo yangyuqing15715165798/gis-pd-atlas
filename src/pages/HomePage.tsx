@@ -28,7 +28,7 @@ export function HomePage() {
         <h2 className="text-xl font-semibold">快速入口</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-3">
           <QuickLink to="/case/internal-void" title="内部放电（示例）" tip="最经典的 PRPD 入门" />
-          <QuickLink to="/case/floating" title="悬浮电位（示例）" tip="像金属小片没接地" />
+          <QuickLink to="/case/surface" title="沿面放电（示例）" tip="在表面“爬电”" />
           <QuickLink to="/case/particle" title="颗粒运动（示例）" tip="放电点会漂移" />
         </div>
       </section>

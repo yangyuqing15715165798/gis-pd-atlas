@@ -1,4 +1,15 @@
-export type PrpdProfile = 'internalVoid' | 'floating' | 'particle' | 'corona'
+export type PrpdProfile =
+  | 'internalVoid'
+  | 'surface'
+  | 'floating'
+  | 'particle'
+  | 'protrusion'
+  | 'intermittent'
+  | 'noise'
+  | 'multiSource'
+  | 'intensityLow'
+  | 'intensityHigh'
+  | 'corona'
 
 export type PrpdPoint = {
   phaseDeg: number
@@ -12,7 +23,7 @@ type GenArgs = {
   noise: number // 0..1 fraction
 }
 
-// simple deterministic RNG (Mulberry32)
+// deterministic RNG (Mulberry32)
 function mulberry32(seed: number) {
   let t = seed >>> 0
   return function () {
@@ -30,7 +41,6 @@ function wrap360(x: number) {
 }
 
 function gauss(rng: () => number) {
-  // Box-Muller
   let u = 0,
     v = 0
   while (u === 0) u = rng()
@@ -42,6 +52,10 @@ function sampleWindow(rng: () => number, centerDeg: number, spreadDeg: number) {
   return wrap360(centerDeg + gauss(rng) * spreadDeg)
 }
 
+function clamp01(x: number) {
+  return Math.min(1, Math.max(0, x))
+}
+
 export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
   const rng = mulberry32(args.seed)
   const pts: PrpdPoint[] = []
@@ -49,48 +63,111 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
   const nNoise = Math.floor(args.n * args.noise)
   const nSig = Math.max(0, args.n - nNoise)
 
+  // baseline noise
   for (let i = 0; i < nNoise; i++) {
-    pts.push({ phaseDeg: rng() * 360, amp: Math.min(1, Math.max(0, rng() ** 1.5)) })
+    pts.push({ phaseDeg: rng() * 360, amp: clamp01(rng() ** 1.6) })
   }
 
   for (let i = 0; i < nSig; i++) {
     const u = rng()
 
+    if (args.profile === 'noise') {
+      // mostly random, with a faint window to teach "not all clouds are defects"
+      const phaseDeg = rng() * 360
+      const amp = clamp01(rng() ** 1.2)
+      pts.push({ phaseDeg, amp })
+      continue
+    }
+
     if (args.profile === 'internalVoid') {
-      // two symmetric windows
       const center = u < 0.5 ? 60 : 240
       const phaseDeg = sampleWindow(rng, center, 14)
-      const amp = Math.min(1, Math.max(0, 0.25 + Math.abs(gauss(rng)) * 0.18 + rng() * 0.08))
+      const amp = clamp01(0.25 + Math.abs(gauss(rng)) * 0.18 + rng() * 0.08)
+      pts.push({ phaseDeg, amp })
+      continue
+    }
+
+    if (args.profile === 'surface') {
+      // broader + slightly skewed amplitude (creeping often has wider spread)
+      const center = u < 0.5 ? 110 : 290
+      const phaseDeg = sampleWindow(rng, center, 22)
+      const amp = clamp01(0.18 + Math.abs(gauss(rng)) * 0.20 + rng() * 0.12)
       pts.push({ phaseDeg, amp })
       continue
     }
 
     if (args.profile === 'floating') {
-      // broader windows + more variance
       const center = u < 0.5 ? 90 : 270
       const phaseDeg = sampleWindow(rng, center, 28)
-      const amp = Math.min(1, Math.max(0, 0.18 + Math.abs(gauss(rng)) * 0.22 + rng() * 0.12))
+      const amp = clamp01(0.18 + Math.abs(gauss(rng)) * 0.22 + rng() * 0.12)
       pts.push({ phaseDeg, amp })
       continue
     }
 
     if (args.profile === 'particle') {
-      // drifting center (simulate time drift by slowly moving window)
-      const drift = (Math.sin((i / nSig) * Math.PI * 2) * 18)
+      const drift = Math.sin((i / nSig) * Math.PI * 2) * 18
       const center = u < 0.5 ? 70 + drift : 250 + drift
       const phaseDeg = sampleWindow(rng, center, 16)
-      const amp = Math.min(1, Math.max(0, 0.22 + Math.abs(gauss(rng)) * 0.20 + rng() * 0.10))
+      const amp = clamp01(0.22 + Math.abs(gauss(rng)) * 0.20 + rng() * 0.10)
       pts.push({ phaseDeg, amp })
       continue
     }
 
-    // corona
-    {
-      const center = u < 0.5 ? 30 : 210
-      const phaseDeg = sampleWindow(rng, center, 18)
-      const amp = Math.min(1, Math.max(0, 0.08 + Math.abs(gauss(rng)) * 0.12 + rng() * 0.06))
+    if (args.profile === 'protrusion') {
+      // sharper window near peaks, a bit stronger amplitude
+      const center = u < 0.5 ? 40 : 220
+      const phaseDeg = sampleWindow(rng, center, 12)
+      const amp = clamp01(0.30 + Math.abs(gauss(rng)) * 0.22 + rng() * 0.10)
       pts.push({ phaseDeg, amp })
+      continue
     }
+
+    if (args.profile === 'intermittent') {
+      // bursty: some points from windows, some missing
+      const burst = rng() < 0.55
+      if (!burst) {
+        // skip generating a signal point ~ to create sparsity
+        pts.push({ phaseDeg: rng() * 360, amp: clamp01(rng() ** 1.6) })
+        continue
+      }
+      const center = u < 0.5 ? 75 : 255
+      const phaseDeg = sampleWindow(rng, center, 18)
+      const amp = clamp01(0.22 + Math.abs(gauss(rng)) * 0.25 + rng() * 0.14)
+      pts.push({ phaseDeg, amp })
+      continue
+    }
+
+    if (args.profile === 'multiSource') {
+      // mixture of internal + corona to teach "叠加"
+      if (rng() < 0.55) {
+        const center = u < 0.5 ? 60 : 240
+        const phaseDeg = sampleWindow(rng, center, 14)
+        const amp = clamp01(0.25 + Math.abs(gauss(rng)) * 0.18 + rng() * 0.08)
+        pts.push({ phaseDeg, amp })
+      } else {
+        const center = u < 0.5 ? 30 : 210
+        const phaseDeg = sampleWindow(rng, center, 18)
+        const amp = clamp01(0.08 + Math.abs(gauss(rng)) * 0.12 + rng() * 0.06)
+        pts.push({ phaseDeg, amp })
+      }
+      continue
+    }
+
+    if (args.profile === 'intensityLow' || args.profile === 'intensityHigh') {
+      const center = u < 0.5 ? 60 : 240
+      const phaseDeg = sampleWindow(rng, center, 14)
+      const base = args.profile === 'intensityLow' ? 0.16 : 0.32
+      const scale = args.profile === 'intensityLow' ? 0.14 : 0.22
+      const amp = clamp01(base + Math.abs(gauss(rng)) * scale + rng() * 0.06)
+      pts.push({ phaseDeg, amp })
+      continue
+    }
+
+    // corona (default)
+    const center = u < 0.5 ? 30 : 210
+    const phaseDeg = sampleWindow(rng, center, 18)
+    const amp = clamp01(0.08 + Math.abs(gauss(rng)) * 0.12 + rng() * 0.06)
+    pts.push({ phaseDeg, amp })
   }
 
   return pts
