@@ -37,7 +37,7 @@ export function AnimationsPage() {
             <select
               value={profile}
               onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-              className="w-full rounded-lg border border-slate-900/10 bg-ink-900 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-slate-900/10 bg-white/80 px-3 py-2 text-sm"
             >
               <option value="corona">电晕放电</option>
               <option value="floatingClassic">悬浮放电（示例·更像）</option>
@@ -98,4 +98,5 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
+
 
