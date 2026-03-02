@@ -129,17 +129,18 @@ export function BuildModePage() {
               <select
                 value={profile}
                 onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-                className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
+                className=\"w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm\"
               >
-                <option value="corona">电晕放电</option>
-                <option value="floatingIn">悬浮放电（内八字）</option>
-                <option value="floatingOut">悬浮放电（外八字）</option>
-                <option value="particle">自由颗粒放电</option>
-                <option value="internalVoid">空穴放电</option>
-                <option value="surface">沿面放电</option>
-                <option value="protrusion">尖端/毛刺</option>
-                <option value="multiSource">多源叠加</option>
-                <option value="noise">噪声/干扰</option>
+                <option value=\"corona\">电晕放电</option>
+                <option value=\"floatingClassic\">悬浮放电（示例·更像）</option>
+                <option value=\"particle\">自由颗粒放电</option>
+                <option value=\"internalVoid\">空穴放电</option>
+                <option value=\"surface\">沿面放电</option>
+                <option value=\"protrusion\">尖端/毛刺</option>
+                <option value=\"multiSource\">多源叠加</option>
+                <option value=\"noise\">噪声/干扰</option>
+                <option value=\"floatingIn\">悬浮放电（内八字·可选）</option>
+                <option value=\"floatingOut\">悬浮放电（外八字·可选）</option>
               </select>
             </Control>
 
@@ -192,3 +193,4 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
+

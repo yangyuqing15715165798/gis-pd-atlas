@@ -1,7 +1,9 @@
 export type PrpdProfile =
   | 'internalVoid'
   | 'surface'
-  | 'floating'
+  | 'floatingClassic'
+  | 'floatingIn'
+  | 'floatingOut'
   | 'particle'
   | 'protrusion'
   | 'intermittent'
@@ -62,7 +64,6 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
   const nNoise = Math.floor(args.n * args.noise)
   const nSig = Math.max(0, args.n - nNoise)
 
-  // background noise
   for (let i = 0; i < nNoise; i++) {
     pts.push({ phaseDeg: rng() * 360, amp: clamp01(rng() ** 1.6) })
   }
@@ -76,7 +77,6 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     if (args.profile === 'internalVoid') {
-      // book: both half-cycles, symmetric, amplitude dispersed, count relatively low
       const center = u < 0.5 ? 55 : 235
       const phaseDeg = sampleWindow(rng, center, 16)
       const amp = clamp01(0.10 + Math.abs(gauss(rng)) * 0.30 + rng() * 0.06)
@@ -85,7 +85,6 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     if (args.profile === 'surface') {
-      // similar to void but more dispersed + unstable
       const center = u < 0.5 ? 110 : 290
       const phaseDeg = sampleWindow(rng, center, 28)
       const amp = clamp01(0.10 + Math.abs(gauss(rng)) * 0.35 + rng() * 0.10)
@@ -93,23 +92,31 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
       continue
     }
 
-    if (args.profile === 'floating') {
-      // book: symmetric in +/- half cycle, larger amp, fewer events, "内八字/外八字" phase-amp correlation.
-      // We'll synthesize an "X" shape by correlating amp with distance to center.
+    if (args.profile === 'floatingClassic') {
+      // user-approved "floating" sample: symmetric + broader windows + more variance (but still structured)
+      const center = u < 0.5 ? 90 : 270
+      const phaseDeg = sampleWindow(rng, center, 26)
+      const amp = clamp01(0.20 + Math.abs(gauss(rng)) * 0.26 + rng() * 0.12)
+      pts.push({ phaseDeg, amp })
+      continue
+    }
+
+    if (args.profile === 'floatingIn' || args.profile === 'floatingOut') {
+      // symmetric + explicit inner/outer-8 structure (kept as optional)
       const center = u < 0.5 ? 90 : 270
       const phaseDeg = sampleWindow(rng, center, 22)
-      const d = Math.abs(((phaseDeg - center + 540) % 360) - 180) // 0..180
-      const slope = clamp01(d / 90)
-      // two branches: amp up with phase offset OR amp down with phase offset
-      const branch = rng() < 0.5 ? 1 : -1
+      const delta = (((phaseDeg - center + 540) % 360) - 180)
+      const norm = Math.min(1, Math.abs(delta) / 90)
+
       const base = 0.55
-      const amp = clamp01(base + branch * (0.25 - slope * 0.30) + gauss(rng) * 0.06)
+      const branch = rng() < 0.5 ? 1 : -1
+      const shape = args.profile === 'floatingIn' ? 0.30 - 0.35 * norm : -0.10 + 0.45 * norm
+      const amp = clamp01(base + branch * shape + gauss(rng) * 0.06)
       pts.push({ phaseDeg, amp })
       continue
     }
 
     if (args.profile === 'particle') {
-      // book: polarity effect not obvious; whole phase cycle has signals; broad amplitude; irregular
       const phaseDeg = rng() * 360
       const amp = clamp01(0.06 + (rng() ** 0.65) * 0.85 * (0.6 + 0.4 * rng()) + gauss(rng) * 0.05)
       pts.push({ phaseDeg, amp })
@@ -138,19 +145,19 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
     }
 
     if (args.profile === 'multiSource') {
-      // mixture of internalVoid + corona
       if (rng() < 0.55) {
         const center = u < 0.5 ? 55 : 235
         const phaseDeg = sampleWindow(rng, center, 16)
         const amp = clamp01(0.10 + Math.abs(gauss(rng)) * 0.30 + rng() * 0.06)
         pts.push({ phaseDeg, amp })
       } else {
-        // corona component
         const majorHalf = rng() < 0.8
         const center = majorHalf ? 210 : 30
         const spread = majorHalf ? 30 : 14
         const phaseDeg = sampleWindow(rng, center, spread)
-        const amp = clamp01((majorHalf ? 0.08 : 0.22) + Math.abs(gauss(rng)) * (majorHalf ? 0.10 : 0.14) + rng() * 0.05)
+        const amp = clamp01(
+          (majorHalf ? 0.08 : 0.22) + Math.abs(gauss(rng)) * (majorHalf ? 0.10 : 0.14) + rng() * 0.05,
+        )
         pts.push({ phaseDeg, amp })
       }
       continue
@@ -166,7 +173,7 @@ export function generatePrpdPoints(args: GenArgs): PrpdPoint[] {
       continue
     }
 
-    // corona: strong polarity effect; typically mainly one half-cycle, weak amplitude wide; severe adds other half-cycle higher amp narrower.
+    // corona
     const majorHalf = rng() < 0.82
     const center = majorHalf ? 210 : 30
     const spread = majorHalf ? 32 : 14
