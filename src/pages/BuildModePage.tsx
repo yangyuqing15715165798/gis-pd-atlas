@@ -65,7 +65,7 @@ export function BuildModePage() {
             <div className="text-xs text-white/55">进度：{Math.round(progress * 100)}%</div>
           </div>
           <div className="mt-3 h-[520px]">
-            <PrpdChart points={state.shown} />
+            <PrpdChart points={state.shown} overlayPoints={state.recent} />
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -155,3 +155,4 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
+

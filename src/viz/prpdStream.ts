@@ -4,16 +4,18 @@ import { generatePrpdPoints } from './prpd'
 export type StreamState = {
   all: PrpdPoint[]
   shown: PrpdPoint[]
+  recent: PrpdPoint[]
   cursor: number
 }
 
 export function initStream(args: { seed: number; profile: PrpdProfile; n: number; noise: number }): StreamState {
   const all = generatePrpdPoints({ seed: args.seed, profile: args.profile, n: args.n, noise: args.noise })
-  return { all, shown: [], cursor: 0 }
+  return { all, shown: [], recent: [], cursor: 0 }
 }
 
 export function stepStream(state: StreamState, batch: number): StreamState {
   const next = Math.min(state.all.length, state.cursor + batch)
+  const recent = state.all.slice(state.cursor, next)
   const shown = state.all.slice(0, next)
-  return { ...state, shown, cursor: next }
+  return { ...state, shown, recent, cursor: next }
 }

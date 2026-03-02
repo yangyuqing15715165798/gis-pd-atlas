@@ -4,14 +4,17 @@ import type { PrpdPoint } from './prpd'
 
 export function PrpdChart({
   points,
+  overlayPoints,
   marks,
   showMarks = true,
 }: {
   points: PrpdPoint[]
+  overlayPoints?: PrpdPoint[]
   marks?: CaseMark[]
   showMarks?: boolean
 }) {
   const data = points.map((p) => [p.phaseDeg, p.amp])
+  const overlay = overlayPoints?.map((p) => [p.phaseDeg, p.amp]) ?? []
 
   const markAreaData =
     showMarks && marks?.length
@@ -78,7 +81,7 @@ export function PrpdChart({
         type: 'scatter',
         symbolSize: 2.6,
         data,
-        itemStyle: { color: 'rgba(0, 255, 208, 0.55)' },
+        itemStyle: { color: 'rgba(0, 255, 208, 0.50)' },
         large: true,
         largeThreshold: 2000,
         markArea: markAreaData.length
@@ -89,6 +92,17 @@ export function PrpdChart({
             }
           : undefined,
       },
+      ...(overlay.length
+        ? [
+            {
+              type: 'scatter',
+              symbolSize: 4.2,
+              data: overlay,
+              itemStyle: { color: 'rgba(62, 112, 255, 0.95)' },
+              silent: true,
+            },
+          ]
+        : []),
     ],
   }
 
