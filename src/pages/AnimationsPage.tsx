@@ -17,7 +17,7 @@ export function AnimationsPage() {
       <div>
         <h1 className="text-2xl font-semibold">动画演示：PRPD 点是怎么来的</h1>
         <p className="mt-2 max-w-3xl text-sm text-white/70">
-          这里不是播放视频，而是用可控参数“现场生成”一张 PRPD 点云：让你直观看到相位窗口、强弱分布、噪声比例改变后，图谱会怎么变。
+          用可控参数“现场生成”一张 PRPD 点云：观察相位窗口、对称性、分散程度与噪声的影响。
         </p>
       </div>
 
@@ -37,18 +37,18 @@ export function AnimationsPage() {
             <select
               value={profile}
               onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-              className=\"w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm\"
+              className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
             >
-              <option value=\"corona\">电晕放电</option>
-              <option value=\"floatingClassic\">悬浮放电（示例·你确认更像）</option>
-              <option value=\"particle\">自由颗粒放电</option>
-              <option value=\"internalVoid\">空穴放电</option>
-              <option value=\"surface\">沿面放电</option>
-              <option value=\"protrusion\">尖端/毛刺</option>
-              <option value=\"multiSource\">多源叠加</option>
-              <option value=\"noise\">噪声/干扰</option>
-              <option value=\"floatingIn\">悬浮放电（内八字·可选）</option>
-              <option value=\"floatingOut\">悬浮放电（外八字·可选）</option>
+              <option value="corona">电晕放电</option>
+              <option value="floatingClassic">悬浮放电（示例·更像）</option>
+              <option value="particle">自由颗粒放电</option>
+              <option value="internalVoid">空穴放电</option>
+              <option value="surface">沿面放电</option>
+              <option value="protrusion">尖端/毛刺</option>
+              <option value="multiSource">多源叠加</option>
+              <option value="noise">噪声/干扰</option>
+              <option value="floatingIn">悬浮放电（内八字·可选）</option>
+              <option value="floatingOut">悬浮放电（外八字·可选）</option>
             </select>
           </Control>
 
@@ -77,11 +77,11 @@ export function AnimationsPage() {
           </Control>
 
           <div className="rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-white/75">
-            <div className="font-semibold">怎么理解这张图？</div>
+            <div className="font-semibold">快速判断思路（教学）</div>
             <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-white/75">
-              <li>横轴：相位（0–360°），可以理解为交流电“转到哪里了”。</li>
-              <li>纵轴：放电幅值（教学归一化 0–1）。</li>
-              <li>点越密：发生得越频繁；点越高：放电越强。</li>
+              <li>先看：有没有明显的“窗口”和“对称”。</li>
+              <li>再看：是否偏一边半周（电晕的极性效应）。</li>
+              <li>最后看：是否全相位铺开（颗粒/噪声更常见）。</li>
             </ul>
           </div>
         </div>
@@ -98,4 +98,3 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
-

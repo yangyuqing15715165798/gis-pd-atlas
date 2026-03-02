@@ -115,9 +115,7 @@ export function BuildModePage() {
             <div className="mt-3 h-[520px]">
               <PrpdChart points={state.all} />
             </div>
-            <div className="mt-3 text-xs text-white/60">
-              教学建议：先看左边“怎么长出来”，再对照右边“最后长成什么样”。
-            </div>
+            <div className="mt-3 text-xs text-white/60">教学建议：先看左边过程，再对照右边结果。</div>
           </div>
         ) : null}
       </section>
@@ -129,18 +127,18 @@ export function BuildModePage() {
               <select
                 value={profile}
                 onChange={(e) => setProfile(e.target.value as PrpdProfile)}
-                className=\"w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm\"
+                className="w-full rounded-lg border border-white/10 bg-ink-900 px-3 py-2 text-sm"
               >
-                <option value=\"corona\">电晕放电</option>
-                <option value=\"floatingClassic\">悬浮放电（示例·更像）</option>
-                <option value=\"particle\">自由颗粒放电</option>
-                <option value=\"internalVoid\">空穴放电</option>
-                <option value=\"surface\">沿面放电</option>
-                <option value=\"protrusion\">尖端/毛刺</option>
-                <option value=\"multiSource\">多源叠加</option>
-                <option value=\"noise\">噪声/干扰</option>
-                <option value=\"floatingIn\">悬浮放电（内八字·可选）</option>
-                <option value=\"floatingOut\">悬浮放电（外八字·可选）</option>
+                <option value="corona">电晕放电</option>
+                <option value="floatingClassic">悬浮放电（示例·更像）</option>
+                <option value="particle">自由颗粒放电</option>
+                <option value="internalVoid">空穴放电</option>
+                <option value="surface">沿面放电</option>
+                <option value="protrusion">尖端/毛刺</option>
+                <option value="multiSource">多源叠加</option>
+                <option value="noise">噪声/干扰</option>
+                <option value="floatingIn">悬浮放电（内八字·可选）</option>
+                <option value="floatingOut">悬浮放电（外八字·可选）</option>
               </select>
             </Control>
 
@@ -174,10 +172,9 @@ export function BuildModePage() {
         </div>
 
         <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <div className="text-sm font-semibold">对齐机理的看法</div>
+          <div className="text-sm font-semibold">说明</div>
           <div className="text-sm text-white/75">
-            这个页面用于教学：同一套参数下，左边是“过程”，右边是“结果”。
-            真正的工程识别还需要结合 PRPS、示波器波形、趋势与多手段联合诊断。
+            此页面用于教学模拟：对照“过程”和“最终形态”。工程识别仍需结合 PRPS、示波器波形与多手段联合诊断。
           </div>
         </div>
       </section>
@@ -193,4 +190,3 @@ function Control({ label, children }: { label: string; children: React.ReactNode
     </div>
   )
 }
-
