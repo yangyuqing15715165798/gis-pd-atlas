@@ -5,6 +5,7 @@ import { DefectsPage } from './pages/DefectsPage'
 import { CasePage } from './pages/CasePage'
 import { AnimationsPage } from './pages/AnimationsPage'
 import { BuildModePage } from './pages/BuildModePage'
+import { QuickRefPage } from './pages/QuickRefPage'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/case/:caseId" element={<CasePage />} />
         <Route path="/animations" element={<AnimationsPage />} />
         <Route path="/build" element={<BuildModePage />} />
+        <Route path="/quickref" element={<QuickRefPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Layout>

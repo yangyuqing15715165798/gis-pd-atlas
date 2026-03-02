@@ -15,6 +15,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <TopNav to="/defects">缺陷类型</TopNav>
             <TopNav to="/animations">动画演示</TopNav>
             <TopNav to="/build">生成过程</TopNav>
+            <TopNav to="/quickref">速查</TopNav>
           </nav>
         </div>
       </header>

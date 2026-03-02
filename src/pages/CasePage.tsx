@@ -11,7 +11,7 @@ export function CasePage() {
 
   const points = useMemo(() => {
     if (!c) return []
-    return generatePrpdPoints({ seed: c.seed, profile: c.profile, n: 5000, noise: 0.08 })
+    return generatePrpdPoints({ seed: c.seed, profile: c.profile, n: c.sim.n, noise: c.sim.noise })
   }, [c])
 
   if (!c) {
@@ -44,7 +44,7 @@ export function CasePage() {
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-2 text-xs text-white/60">
                 <input type="checkbox" checked={showMarks} onChange={(e) => setShowMarks(e.target.checked)} />
-                显示标注层（3 个关键区域）
+                显示标注层（关键区域）
               </label>
               <div className="text-xs text-white/50">相位 0–360° · 幅值 0–1</div>
             </div>
@@ -52,6 +52,7 @@ export function CasePage() {
           <div className="mt-3 h-[420px]">
             <PrpdChart points={points} marks={c.marks} showMarks={showMarks} />
           </div>
+          <div className="mt-3 text-xs text-white/55">固定样例参数：n={c.sim.n} · noise={c.sim.noise}</div>
         </div>
 
         <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -83,12 +84,21 @@ export function CasePage() {
           </div>
 
           <Link
-            to="/animations"
+            to="/build"
             className="block rounded-xl bg-emerald-400/15 px-4 py-3 text-sm font-semibold text-emerald-200 hover:bg-emerald-400/20"
           >
-            去看：PRPD 是怎么“画出来”的（动画） →
+            去看：点云如何“长出来”（生成过程） →
           </Link>
         </div>
+      </section>
+
+      <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <div className="text-sm font-semibold">识别要点（5 条）</div>
+        <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-white/75">
+          {c.recognitionPoints.map((t) => (
+            <li key={t}>{t}</li>
+          ))}
+        </ol>
       </section>
 
       <section className="rounded-2xl border border-white/10 bg-white/5 p-6">
