@@ -14,6 +14,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <TopNav to="/">首页</TopNav>
             <TopNav to="/defects">缺陷类型</TopNav>
             <TopNav to="/animations">动画演示</TopNav>
+            <TopNav to="/build">生成过程</TopNav>
           </nav>
         </div>
       </header>
@@ -45,4 +46,3 @@ function TopNav({ to, children }: { to: string; children: ReactNode }) {
     </NavLink>
   )
 }
-
